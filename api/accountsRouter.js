@@ -2,8 +2,12 @@ const router = require("express").Router();
 const db = require("../data/dbConfig.js");
 
 router.get("/", async (req, res) => {
+  const { limit, sortby, sortdir } = req.query;
   try {
-    const accounts = await db("accounts");
+    const accounts = await db("accounts")
+      .select("*")
+      .orderBy(sortby ? sortby : "name", sortdir ? sortdir : "ASC")
+      .limit(limit ? limit : null);
     return res.status(200).json(accounts);
   } catch (err) {
     console.log(err);
