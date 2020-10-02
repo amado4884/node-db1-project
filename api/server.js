@@ -1,9 +1,10 @@
 const express = require("express");
-
-const db = require("../data/dbConfig.js");
+const accounts = require("./accountsRouter");
+const northWind = require("./northWindRouter");
 
 const server = express();
 
 server.use(express.json());
-
+server.use("/api/accounts", accounts);
+server.use("/api/northwind", northWind);
 module.exports = server;
